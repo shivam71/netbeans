@@ -40,7 +40,6 @@ import net.java.html.json.Function;
 import net.java.html.json.Model;
 import net.java.html.json.ModelOperation;
 import net.java.html.json.Property;
-import org.eclipse.lsp4j.ApplyWorkspaceEditParams;
 import org.eclipse.lsp4j.CodeAction;
 import org.eclipse.lsp4j.CodeActionKind;
 import org.eclipse.lsp4j.CodeActionParams;
@@ -60,6 +59,7 @@ import org.netbeans.modules.java.lsp.server.Utils;
 import org.netbeans.modules.java.lsp.server.input.QuickPickItem;
 import org.netbeans.modules.java.lsp.server.protocol.CodeActionsProvider;
 import org.netbeans.modules.java.lsp.server.protocol.NbCodeLanguageClient;
+import static org.netbeans.modules.java.lsp.server.refactoring.CodeRefactoring.sendRefactoringChanges;
 import org.netbeans.modules.parsing.api.ResultIterator;
 import org.netbeans.modules.refactoring.java.api.ChangeParametersRefactoring;
 import org.netbeans.modules.refactoring.java.api.JavaRefactoringUtils;
@@ -281,7 +281,7 @@ public final class ChangeMethodParametersRefactoring extends CodeRefactoring {
                 }
                 refactoring.setParameterInfo(params);
                 refactoring.getContext().add(JavaRefactoringUtils.getClasspathInfoFor(file));
-                client.applyEdit(new ApplyWorkspaceEditParams(perform(refactoring, "ChangeMethodParameters")));
+                sendRefactoringChanges(client, refactoring, "ChangeMethodParameters");
             } catch (Exception ex) {
                 if (client == null) {
                     Exceptions.printStackTrace(
