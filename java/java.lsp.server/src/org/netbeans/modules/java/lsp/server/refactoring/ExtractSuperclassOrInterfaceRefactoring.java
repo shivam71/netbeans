@@ -243,7 +243,7 @@ public final class ExtractSuperclassOrInterfaceRefactoring extends CodeRefactori
                 refactoring = r;
             }
             refactoring.getContext().add(JavaRefactoringUtils.getClasspathInfoFor(file));
-            sendRefactoringChanges(client,refactoring,EXTRACT_SUPERCLASS_REFACTORING_COMMAND.equals(command) ? "Extract Superclass" : "Extract Interface");
+            sendRefactoringChanges(client, refactoring, EXTRACT_SUPERCLASS_REFACTORING_COMMAND.equals(command) ? "Extract Superclass" : "Extract Interface");
         } catch (Exception ex) {
             client.showMessage(new MessageParams(MessageType.Error, ex.getLocalizedMessage()));
         }

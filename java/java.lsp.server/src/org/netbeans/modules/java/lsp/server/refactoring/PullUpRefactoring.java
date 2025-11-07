@@ -245,7 +245,7 @@ public final class PullUpRefactoring extends CodeRefactoring {
             refactoring.setTargetType(targetHandle);
             refactoring.setMembers(memberHandles.toArray(new MemberInfo[0]));
             refactoring.getContext().add(JavaRefactoringUtils.getClasspathInfoFor(file));
-            sendRefactoringChanges(client,refactoring,"PullUp");
+            sendRefactoringChanges(client, refactoring, "PullUp");
         } catch (Exception ex) {
             client.showMessage(new MessageParams(MessageType.Error, ex.getLocalizedMessage()));
         }

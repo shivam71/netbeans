@@ -59,7 +59,6 @@ import org.netbeans.modules.java.lsp.server.Utils;
 import org.netbeans.modules.java.lsp.server.input.QuickPickItem;
 import org.netbeans.modules.java.lsp.server.protocol.CodeActionsProvider;
 import org.netbeans.modules.java.lsp.server.protocol.NbCodeLanguageClient;
-import static org.netbeans.modules.java.lsp.server.refactoring.CodeRefactoring.sendRefactoringChanges;
 import org.netbeans.modules.parsing.api.ResultIterator;
 import org.netbeans.modules.refactoring.java.api.ChangeParametersRefactoring;
 import org.netbeans.modules.refactoring.java.api.JavaRefactoringUtils;

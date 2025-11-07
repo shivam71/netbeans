@@ -68,14 +68,7 @@ import org.openide.util.Exceptions;
  */
 public abstract class CodeRefactoring extends CodeActionsProvider {
 
-    protected static final WorkspaceEdit perform(AbstractRefactoring refactoring, String name) throws Exception {
-        RefactoringSession session = RefactoringSession.create(name);
-        Problem p = prepare(refactoring, session);
-        if(p!=null && p.isFatal()) 
-           throw new IllegalStateException(p.getMessage());
-        return perform(refactoring, session);
-    }
-    protected static final WorkspaceEdit perform(AbstractRefactoring refactoring, RefactoringSession session) throws Exception {
+    private static WorkspaceEdit perform(AbstractRefactoring refactoring, RefactoringSession session) throws Exception {
         List<Either<TextDocumentEdit, ResourceOperation>> resultChanges = new ArrayList<>();
         Map<String, String> renames = new HashMap<>();
         List<RefactoringElementImplementation> fileChanges = APIAccessor.DEFAULT.getFileChanges(session);
@@ -141,14 +134,14 @@ public abstract class CodeRefactoring extends CodeActionsProvider {
         return new WorkspaceEdit(resultChanges);
     }
 
-    protected static final Problem prepare(AbstractRefactoring refactoring, RefactoringSession session) {
+    private static Problem prepare(AbstractRefactoring refactoring, RefactoringSession session) {
         Problem p = refactoring.checkParameters();
         p = JavaPluginUtils.chainProblems(p, refactoring.preCheck());
         p = JavaPluginUtils.chainProblems(p, refactoring.prepare(session));
         return p;
     }
 
-    protected static final ShowMessageRequestParams warningsMessageParams(
+    private static ShowMessageRequestParams warningsMessageParams(
             Problem p) {
         final MessageActionItem yes = new MessageActionItem("Yes");
         final MessageActionItem no = new MessageActionItem("No");
@@ -164,7 +157,8 @@ public abstract class CodeRefactoring extends CodeActionsProvider {
         smrp.setType(MessageType.Warning);
         return smrp;
     }
-    protected static final void showRefactoringWarnings(NbCodeLanguageClient client,AbstractRefactoring refactoring,RefactoringSession session,Problem p) {
+
+    private static void showRefactoringWarnings(NbCodeLanguageClient client,AbstractRefactoring refactoring,RefactoringSession session,Problem p) {
         ShowMessageRequestParams smrp = warningsMessageParams(p);
         client.showMessageRequest(smrp).thenAccept(ai -> {
             if (ai.getTitle().equalsIgnoreCase("Yes")) {
@@ -180,7 +174,8 @@ public abstract class CodeRefactoring extends CodeActionsProvider {
             }
         });
     }
-    protected static final void sendRefactoringChanges(NbCodeLanguageClient client, AbstractRefactoring refactoring, String name) throws Exception {
+
+    protected static void sendRefactoringChanges(NbCodeLanguageClient client, AbstractRefactoring refactoring, String name) throws Exception {
         RefactoringSession session = RefactoringSession.create(name);
         Problem p = prepare(refactoring, session);
         if (p == null) {

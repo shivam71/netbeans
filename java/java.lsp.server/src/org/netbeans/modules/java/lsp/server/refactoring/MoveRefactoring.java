@@ -406,7 +406,7 @@ public final class MoveRefactoring extends CodeRefactoring {
                 } else {
                     refactoring.setTarget(Lookup.EMPTY);
                 }
-                sendRefactoringChanges(client,refactoring,"Move");
+                sendRefactoringChanges(client, refactoring, "Move");
             } catch (Exception ex) {
                 if (client == null) {
                     Exceptions.printStackTrace(
